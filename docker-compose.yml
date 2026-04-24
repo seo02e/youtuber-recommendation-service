@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  recommend_db:
+    image: postgres:16
+    container_name: youtuber_recommend_db
+    restart: always
+
+    environment:
+      POSTGRES_USER: "${POSTGRES_USER}"
+      POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+      POSTGRES_DB: "${POSTGRES_DB}"
+
+    ports:
+      - "${DB_PORT}:5432"
+
+    volumes:
+      - "./DB/postgre_data:/var/lib/postgresql/data"
+      - "./DB/init:/docker-entrypoint-initdb.d"
+
+    networks:
+      - youtube_network
+
+networks:
+  youtube_network:
+    driver: bridge
